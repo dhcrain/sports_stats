@@ -3,9 +3,21 @@ import psycopg2
 connection = psycopg2.connect("dbname=learning_sql user=dbperson")
 cursor = connection.cursor()
 
-def search_player():
+def search_player_name():
+    search = input('Search: ')
+    cursor.execute("select * from san_jacinto_baseball WHERE full_name = %s;", (search,))
+    results = cursor.fetchall()
     for row in results:
-        print(row)
+        print(row[0], "#", row[2])
+        print("Pos.", row[1])
+        print("AVG:", row[3])
+        print("HR:", row[4])
+        print("RBI:", row[5])
+        print("Runs:", row[6])
+    else:
+        print(" ! No Match !")
+search_player_name()
+
 
 def add_player():
     pass

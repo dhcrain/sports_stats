@@ -44,6 +44,7 @@ cursor.execute("INSERT INTO san_jacinto_baseball VALUES"
 
 
 connection.commit()
+
 cursor.execute("select * from san_jacinto_baseball")
 results = cursor.fetchall()
 for row in results:
