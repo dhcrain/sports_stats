@@ -10,9 +10,19 @@ print("\nWelcome to San Jacinto Baseball Stats")
 
 def welcome():
     print("\nWhat would you like to do?")
-    choice = input("1. Search for a player\n2. Add a Player\n3. Update Player\n4. See Top Players\n5. Show All\n6. Exit ")
-    options = {"1": search_query, "2": add_player, "3": update_player, "4": top_players(), "5": show_all, "6": exit}
-    if choice not in "1234":
+    choice = input("1. Search for a player\n"
+                   "2. Add a Player\n"
+                   "3. Update Player\n"
+                   "4. See Top Players\n"
+                   "5. Show All\n"
+                   "6. Exit ")
+    options = {"1": search_query,
+               "2": add_player,
+               "3": update_player,
+               "4": top_players,
+               "5": show_all,
+               "6": exit}
+    if choice not in "123456":
         print(" ! Not a valid choice ! \n")
     else:
         options[choice]()
@@ -57,10 +67,15 @@ def search_query():
 def search(stat, operator, search_critera):
     cursor.execute("select * from san_jacinto_baseball WHERE {} {} %s;".format(stat, operator), (search_critera,))
     results = cursor.fetchall()
-    for row in results:
-        search_display(row)
-    else:   # funky, always displays.....
-        print("2 ! No Match !")
+    if results == []:
+        if input(" ! No Match !\n\nWould you like to add this player? Y/n").lower() != "n":
+            add_player()
+        else:
+            welcome()
+    else:
+        for row in results:
+            search_display(row)
+
     return search_critera
 
 
