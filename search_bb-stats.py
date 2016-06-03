@@ -73,24 +73,32 @@ def search(stat, operator, search_critera):
         else:
             welcome()
     else:
+        display_header()
         for row in results:
             search_display(row)
-
     return search_critera
 
 
+def display_header():
+    titles = ["Name", "#", "POS", "AVG", "HR", "RBI", "R"]
+    print("{:^30}|{:^4}|{:^7}|{:^6}|{:^4}|{:^4}|{:^4}".format(titles[0], titles[1], titles[2], titles[3], titles[4],
+                                                              titles[5], titles[6]))
+    print("-" * 29, "+", "-" * 2, "+", "-" * 5, "+", "-" * 4, "+", "-" * 2, "+", "-" * 2, "+", "-" * 3)
+
+
 def search_display(player):
-    print("-"*25)
-    print(player[0], "#", player[2])
-    print("Pos.", player[1])
-    print("AVG:", player[3])
-    print("HR:", player[4])
-    print("RBI:", player[5])
-    print("Runs:", player[6])
+    player_name = (player[0])
+    number = (player[2])
+    position = (player[1])
+    avg = (player[3])
+    hr = (player[4])
+    rbi = (player[5])
+    runs = (player[6])
+    print("{:^30}|{:>4}|{:>7}|{:>6.3f}|{:>4}|{:>4}|{:>4}".format(player_name, number, position, avg, hr, rbi, runs))
 
 
 def update_player():
-    name =  input("Which player to update? (Full Name): ")
+    name = input("Which player to update? (Full Name): ")
     edit_palyer(name)
 
 
@@ -138,6 +146,7 @@ def add_player():
 def show_all():
     cursor.execute("select * from san_jacinto_baseball")
     results = cursor.fetchall()
+    display_header()
     for row in results:
         search_display(row)
 
@@ -151,6 +160,7 @@ def top_players():
                    "4": "runs"}
     cursor.execute("SELECT * FROM san_jacinto_baseball ORDER BY {} DESC;".format(top_options[top_choice]))
     results = cursor.fetchmany(5)
+    display_header()
     for row in results:
         search_display(row)
     welcome()
