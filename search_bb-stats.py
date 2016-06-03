@@ -10,8 +10,8 @@ print("\nWelcome to San Jacinto Baseball Stats")
 
 def welcome():
     print("\nWhat would you like to do?")
-    choice = input("1. Search for a player\n2. Add a Player\n3. Update Player\n4. Show All\n5. Exit ")
-    options = {"1": search_query, "2": add_player, "3": update_player, "4": show_all, "5": exit}
+    choice = input("1. Search for a player\n2. Add a Player\n3. Update Player\n4. See Top Players\n5. Show All\n6. Exit ")
+    options = {"1": search_query, "2": add_player, "3": update_player, "4": top_players(), "5": show_all, "6": exit}
     if choice not in "1234":
         print(" ! Not a valid choice ! \n")
     else:
@@ -47,7 +47,7 @@ def search_query():
         search(sq_options[search_num], op_choice[operator], search_string)
     else:
         search(sq_options[search_num], "=", search_string)
-    if input("Would you like to edit this player? Y/n").lower() != "n"
+    if input("\nWould you like to edit this player? Y/n").lower() != "n":
         edit_palyer(search_string)
     else:
         welcome()
@@ -75,12 +75,13 @@ def search_display(player):
 
 
 def update_player():
-    return input("Which player to update? (Full Name): ")
+    name =  input("Which player to update? (Full Name): ")
+    edit_palyer(name)
 
 
 def edit_palyer(name):
     search("full_name", "=", name)
-    update_num = input("\nWhat stat update? \n"
+    update_num = input("\nWhat stat to update? \n"
                        "1. Full Name\n"
                        "2. Number\n"
                        "3. Position\n"
@@ -125,11 +126,23 @@ def show_all():
     for row in results:
         search_display(row)
 
+
+def top_players():
+    print("\nSee the top 5 for?")
+    top_choice = input("1. AVG\n2. HR\n3. RBI\n4. Runs ")
+    top_options = {"1": "avg",
+                   "2": "hr",
+                   "3": "rbi",
+                   "4": "runs"}
+    cursor.execute("SELECT * FROM san_jacinto_baseball ORDER BY {} DESC;".format(top_options[top_choice]))
+    results = cursor.fetchmany(5)
+    for row in results:
+        search_display(row)
+    welcome()
+
 connection.commit()
 
-
 welcome()
-# update_player()
 
 cursor.close()
 connection.close()
