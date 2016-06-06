@@ -19,16 +19,6 @@ table_create = """CREATE TABLE san_jacinto_baseball (
 
 cursor.execute(table_create)
 
-# full_name = "Tucker Cascadden"
-# position = "INF"
-# number = 17
-# avg = .268
-# hr = 0
-# rbi = 3
-# runs = 7
-
-# cursor.execute("INSERT INTO san_jacinto_baseball VALUES (%s, %s, %s, %s, %s, %s, %s);", (full_name, position, number, avg, hr, rbi, runs))  # fixture data
-
 # http://stats.njcaa.org/sports/bsb/2015-16/div1/teams/sanjacintocollegenorth?view=lineup
 cursor.execute("INSERT INTO san_jacinto_baseball VALUES"
                "('Tucker Cascadden', 'INF', 17, .268, 0, 3, 7),"
@@ -45,10 +35,10 @@ cursor.execute("INSERT INTO san_jacinto_baseball VALUES"
 
 connection.commit()
 
-cursor.execute("select * from san_jacinto_baseball")
-results = cursor.fetchall()
-for row in results:
-    print(row)
+# cursor.execute("select * from san_jacinto_baseball")
+# results = cursor.fetchall()
+# for row in results:
+#     print(row)
 
 cursor.close()
 connection.close()
